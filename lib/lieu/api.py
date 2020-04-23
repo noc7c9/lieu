@@ -111,9 +111,9 @@ class DedupeResponse(object):
 
     @classmethod
     def add_possible_dupe(cls, response, value, dupe, is_canonical, explain=None):
-        if dupe.status in (cls.classifications.EXACT_DUPE, cls.classifications.LIKELY_DUPE):
+        if dupe.status in (duplicate_status.EXACT_DUPLICATE, duplicate_status.LIKELY_DUPLICATE):
             key = 'same_as'
-        elif dupe.status == cls.classifications.NEEDS_REVIEW:
+        elif dupe.status == duplicate_status.NEEDS_REVIEW:
             key = 'possibly_same_as'
         else:
             return response
@@ -121,7 +121,7 @@ class DedupeResponse(object):
         response.setdefault(key, [])
         dupe_response = {
             'is_canonical': is_canonical,
-            'classification': dupe.status,
+            'classification': dupe.status.name,
             'object': value,
         }
 
